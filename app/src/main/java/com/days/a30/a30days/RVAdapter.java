@@ -35,9 +35,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         holder.mChallengeName.setText(challenge.mName);
         holder.mChallengeDesc.setText(challenge.mDesc);
 
-        holder.setButtonBehaviour(challenge.mCompleteForToday);
-        holder.mButton.setEnabled(!challenge.mCompleteForToday);
-        if (challenge.mCompleteForToday) {
+        boolean completedForToday = challenge.completeForToday();
+
+        holder.setButtonBehaviour(completedForToday);
+        holder.mButton.setEnabled(!completedForToday);
+        if (completedForToday) {
             holder.mButton.setText("Challenge completed for today!");
         } else {
             holder.mButton.setText("Tap here to complete todays challenge!");

@@ -33,6 +33,7 @@ public class NewChallengeActivity extends Activity {
             @Override
             public void onClick(View v) {
                 // check if fields are empty
+                // TODO: replace error toast using material edittexts build in functionality
                 if (mNameField.getText().toString().isEmpty()) {
                     Toast.makeText(v.getContext(), "Please enter a name for your new challenge", Toast.LENGTH_SHORT).show();
                 } else if (SharedPrefs.doesChallengeExist(v.getContext(), mNameField.getText().toString())) {

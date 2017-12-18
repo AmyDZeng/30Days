@@ -51,38 +51,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setUpRecyclerView() {
-        // TODO: grab data here
-        ArrayList<Challenge> data = new ArrayList<>();
-        data.add(new Challenge(5,"asdf","asdf",false));
-        data.add(new Challenge(5,"asdf","asdf",false));
-        data.add(new Challenge(5,"asdf","asdf",false));
-        data.add(new Challenge(5,"asdf","asdf",false));
-        data.add(new Challenge(5,"asdf","asdf",false));
-        data.add(new Challenge(5,"asdf","asdf",false));
-        data.add(new Challenge(5,"asdf","asdf",false));
+        ArrayList<Challenge> data = SharedPrefs.getAllChallenges(this);
         mAdapter = new RVAdapter(data);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
     }
 
-    // TODO: handle the mem writes here
-    // serialize challenge key based on its data -- make funciton for that
-        // should use all the data -- or else duplicates will overwrite.
-        // this should be easy, maybe don't include changing data like day or succ/fail
-        // during creation of new challenges, check shared pref for the existence.
-        // disallow duplicates here
-            // raises question -- do we allow editng of the names/desc?
-            // since desc might change we might want not to base the key on that ...
-
-
-    // --> OK, serialize key based on just the name. then disallow editing the name
-    //          and allow editing of the description.
-
-    // potentially serialize based on the day count ? no, we could still dupe that data
-
-    // TODO: where to do save? how to save? deets
-    // static class with handlers
-    // don't think we need to deal with consistency .. or do we?
-        // creation at the same time as saving data -- semaphore?
-        // this is handled by the editor object, no worries!
 }

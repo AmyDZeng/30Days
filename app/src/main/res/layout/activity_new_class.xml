@@ -25,7 +25,6 @@
                 android:textStyle="bold"
                 android:textSize="20sp"
                 android:gravity="center"
-                android:textColor="@color/abc_btn_colored_borderless_text_material"
                 android:paddingBottom="20dp"
                 />
 
@@ -53,8 +52,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:text="Create new challenge!"
-        android:background="@color/cardview_light_background"
-        android:textColor="@color/abc_btn_colored_borderless_text_material"
         android:textAllCaps="true"
         />
 

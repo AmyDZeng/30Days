@@ -17,6 +17,10 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
 
     ArrayList<Challenge> mData = new ArrayList<>();
 
+    public RVAdapter(ArrayList<Challenge> data) {
+        mData = data;
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview, parent, false);

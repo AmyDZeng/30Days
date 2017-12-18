@@ -1,20 +1,19 @@
 package com.days.a30.a30days;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView mRecyclerView;
+    RVAdapter mAdapter;
     LinearLayoutManager mLayoutManager;
 
     @Override
@@ -28,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(getBaseContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+        setUpRecyclerView();
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,6 +37,21 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    public void setUpRecyclerView() {
+        // TODO: grab data here
+        ArrayList<Challenge> data = new ArrayList<>();
+        data.add(new Challenge(5,"asdf","asdf",false));
+        data.add(new Challenge(5,"asdf","asdf",false));
+        data.add(new Challenge(5,"asdf","asdf",false));
+        data.add(new Challenge(5,"asdf","asdf",false));
+        data.add(new Challenge(5,"asdf","asdf",false));
+        data.add(new Challenge(5,"asdf","asdf",false));
+        data.add(new Challenge(5,"asdf","asdf",false));
+        mAdapter = new RVAdapter(data);
+        mRecyclerView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
     }
 
     // TODO: handle the mem writes here

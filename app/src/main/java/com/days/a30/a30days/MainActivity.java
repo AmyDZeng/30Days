@@ -9,11 +9,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final int REQUEST_CODE_NEW_CHALLENGE_SUCCESS = 1;
+    public static final String EXTRAS_KEY_CHALLENGE_JSON = "EXTRAS_KEY_CHALLENGE_JSON";
 
     RecyclerView mRecyclerView;
     RVAdapter mAdapter;
@@ -46,7 +49,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_NEW_CHALLENGE_SUCCESS) {
-            // TODO: append new data to adapter
+            // get challenge from data
+            String json = data.getExtras().getString(EXTRAS_KEY_CHALLENGE_JSON);
+            Gson gson = new Gson();
+            Challenge challenge = gson.fromJson(json, Challenge.class);
+
+            mAdapter.addChallenge(challenge);
         }
     }
 

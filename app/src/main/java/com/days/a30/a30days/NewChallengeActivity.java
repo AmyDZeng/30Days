@@ -1,11 +1,13 @@
 package com.days.a30.a30days;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 /**
@@ -43,7 +45,13 @@ public class NewChallengeActivity extends Activity {
                     Challenge challenge = new Challenge(1, mNameField.getText().toString(), mDescField.getText().toString());
                     SharedPrefs.saveNewChallenge(getApplicationContext(), challenge);
                     // set activity flags
-                    setResult(Activity.RESULT_OK, null);
+                    Intent extras = new Intent();
+
+                    Gson gson = new Gson();
+                    String json = gson.toJson(challenge, Challenge.class);
+                    extras.putExtra(MainActivity.EXTRAS_KEY_CHALLENGE_JSON, json);
+
+                    setResult(Activity.RESULT_OK, extras);
                     finish();
                 }
             }

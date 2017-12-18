@@ -66,6 +66,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         }
     }
 
+    public void addChallenge(Challenge challenge) {
+        mData.add(challenge);
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return mData.size();

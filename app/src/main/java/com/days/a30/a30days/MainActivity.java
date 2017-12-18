@@ -52,7 +52,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void setUpRecyclerView() {
         ArrayList<Challenge> data = SharedPrefs.getAllChallenges(this);
-        mAdapter = new RVAdapter(data);
+        mAdapter = new RVAdapter(data, new RVAdapter.ChallengeButtonListener() {
+            @Override
+            public void onChallengeClicked(Challenge challenge) {
+                // change challenge objs timestamp
+                challenge.mLastCheckTimestamp = System.currentTimeMillis();
+                // persist into SP
+                SharedPrefs.editChallenge(getApplicationContext(), challenge);
+            }
+        });
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
     }

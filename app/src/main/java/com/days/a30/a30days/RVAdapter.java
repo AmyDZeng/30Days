@@ -15,10 +15,16 @@ import java.util.ArrayList;
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
 
-    ArrayList<Challenge> mData = new ArrayList<>();
+    public interface ChallengeButtonListener {
+        void onChallengeClicked(Challenge challenge);
+    }
 
-    public RVAdapter(ArrayList<Challenge> data) {
+    ArrayList<Challenge> mData = new ArrayList<>();
+    ChallengeButtonListener mButtonListener;
+
+    public RVAdapter(ArrayList<Challenge> data, ChallengeButtonListener listener) {
         mData = data;
+        mButtonListener = listener;
     }
 
     @Override
@@ -30,19 +36,33 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Challenge challenge = mData.get(position);
+        final Challenge challenge = mData.get(position);
         holder.mDayCountTV.setText(challenge.mDayCount + " Days");
         holder.mChallengeName.setText(challenge.mName);
         holder.mChallengeDesc.setText(challenge.mDesc);
 
         boolean completedForToday = challenge.completeForToday();
 
-        holder.setButtonBehaviour(completedForToday);
+        // set button conditions
         holder.mButton.setEnabled(!completedForToday);
-        if (completedForToday) {
+        if (challenge.failedChallenge()) {
+            holder.mButton.setText("Challenge Failed! Try again :(");
+        } else if (completedForToday) {
             holder.mButton.setText("Challenge completed for today!");
         } else {
             holder.mButton.setText("Tap here to complete todays challenge!");
+            holder.mButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // only available if not complete
+                    if (v.getId() == R.id.button) {
+                        v.setEnabled(false);
+                        ((Button)v).setText("Challenge completed for today!");
+                        if (mButtonListener != null) mButtonListener.onChallengeClicked(challenge);
+                    }
+
+                }
+            });
         }
     }
 
@@ -65,17 +85,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
             mButton = (Button) view.findViewById(R.id.button);
         }
 
-        public void setButtonBehaviour(final boolean todayComplete) {
-            mButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                // if its not complete, complete it and disable button
-                if (todayComplete) {
-                    // save completion to SP
-                }
-                }
-            });
-        }
     }
 
 }

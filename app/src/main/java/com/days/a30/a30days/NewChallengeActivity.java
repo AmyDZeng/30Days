@@ -26,9 +26,7 @@ public class NewChallengeActivity extends Activity {
         setContentView(R.layout.activity_new_class);
 
         mNameField = (MaterialEditText) findViewById(R.id.edittext_name);
-        mNameField.setHint("Challenge Name");
         mDescField = (MaterialEditText) findViewById(R.id.edittext_desc);
-        mDescField.setHint("Challenge Description (optional)");
 
         mButton = (Button) findViewById(R.id.button_create_challenge);
         mButton.setOnClickListener(new View.OnClickListener() {
@@ -56,5 +54,17 @@ public class NewChallengeActivity extends Activity {
                 }
             }
         });
+
+        stylizeFields();
+    }
+
+    private void stylizeFields() {
+        mNameField.setHelperText("Challenge Name");
+        mNameField.setHelperTextAlwaysShown(true);
+        mNameField.setHint("Wake up early");
+
+        mDescField.setHelperText("Challenge Description (optional)");
+        mDescField.setHelperTextAlwaysShown(true);
+        mDescField.setHint("Out of bed by 7am! No snoozing!");
     }
 }

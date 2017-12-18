@@ -1,24 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
-    <com.rengwuxian.materialedittext.MaterialEditText
-        android:id="@+id/edittext_name"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:lines="1"
         android:layout_alignParentTop="true"
-        />
-
-    <com.rengwuxian.materialedittext.MaterialEditText
-        android:id="@+id/edittext_desc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/edittext_name"
         android:layout_above="@+id/button_create_challenge"
-        android:scrollbars="vertical"
-        />
+        >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="15dp"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Please fill in the details about your new challenge:"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:textColor="@color/abc_btn_colored_borderless_text_material"
+                android:paddingBottom="20dp"
+                />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/edittext_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:paddingBottom="15dp"
+                />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/edittext_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+        </LinearLayout>
+
+    </ScrollView>
 
     <Button
         android:id="@+id/button_create_challenge"
@@ -26,6 +53,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:text="Create new challenge!"
+        android:background="@color/cardview_light_background"
+        android:textColor="@color/abc_btn_colored_borderless_text_material"
+        android:textAllCaps="true"
         />
 
 </RelativeLayout>

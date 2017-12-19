@@ -26,6 +26,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
     public RVAdapter(ArrayList<Challenge> data, ChallengeListener listener) {
         mData = data;
         mListener = listener;
+        notifyDataSetChanged();
     }
 
     @Override

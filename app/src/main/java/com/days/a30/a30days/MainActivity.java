@@ -1,6 +1,9 @@
 package com.days.a30.a30days;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -43,6 +46,24 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent, REQUEST_CODE_NEW_CHALLENGE_SUCCESS);
             }
         });
+
+        scheduleNotifIfNecessary();
+    }
+
+    private void scheduleNotifIfNecessary() {
+        if (mAdapter.getItemCount() == 0) return;
+
+        Notification notif = new Notification.Builder(this)
+                .setContentTitle(getString(R.string.notif_title))
+                .setContentText(String.format(getString(R.string.notif_content), mAdapter.getItemCount()))
+                .setVibrate(new long[]{200, 200, 200})
+                .setLights(255, 300, 2000)
+                // TODO: replace with new icon
+                .setSmallIcon(R.drawable.met_ic_clear)
+                .build();
+
+        NotificationManager notifManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        notifManager.notify(123, notif);
     }
 
     @Override

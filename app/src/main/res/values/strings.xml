@@ -2,4 +2,6 @@
     <string name="app_name">30 Days</string>
     <string name="action_settings">Settings</string>
     <string name="challenges_for_today">Challenges for today</string>
+    <string name="notif_title">Challenges for today</string>
+    <string name="notif_content">You have %d active challenges!</string>
 </resources>

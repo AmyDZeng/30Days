@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
     RVAdapter mAdapter;
     LinearLayoutManager mLayoutManager;
+    AlertDialog.Builder mDeleteDialogBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         scheduleNotifIfNecessary();
+        // Need to pass in pointer to activity
+        mDeleteDialogBuilder = new AlertDialog.Builder(this);
     }
 
     private void scheduleNotifIfNecessary() {
@@ -81,13 +86,36 @@ public class MainActivity extends AppCompatActivity {
 
     public void setUpRecyclerView() {
         ArrayList<Challenge> data = SharedPrefs.getAllChallenges(this);
-        mAdapter = new RVAdapter(data, new RVAdapter.ChallengeButtonListener() {
+        mAdapter = new RVAdapter(data, new RVAdapter.ChallengeListener() {
             @Override
             public void onChallengeClicked(Challenge challenge) {
                 // change challenge objs timestamp
                 challenge.mLastCheckTimestamp = System.currentTimeMillis();
                 // persist into SP
                 SharedPrefs.editChallenge(getApplicationContext(), challenge);
+            }
+
+            @Override
+            public void onChallengeLongClick(final Challenge challenge) {
+                mDeleteDialogBuilder
+                        .setTitle(R.string.delete_challenge)
+                        .setMessage(R.string.confirm_delete)
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // delete from SP
+                                SharedPrefs.deleteChallenge(getApplicationContext(), challenge);
+                                // remove from mAdapter
+                                mAdapter.removeChallenge(challenge);
+                            }
+                        })
+                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // no-op
+                            }
+                        })
+                        .show();
             }
         });
         mRecyclerView.setAdapter(mAdapter);

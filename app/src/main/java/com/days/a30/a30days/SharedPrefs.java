@@ -80,4 +80,16 @@ public final class SharedPrefs {
         return challengeKeys;
     }
 
+    public static void deleteChallenge(Context context,Challenge challenge) {
+        // remove data itself
+        SharedPreferences.Editor editor = context.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE).edit();
+        editor.remove(challenge.mName);
+        // also remove from list of challenge keys
+        HashSet<String> challengeKeys = getChallengeKeys(context);
+        challengeKeys.remove(challenge.mName);
+        editor.putStringSet(KEY_NAMES_OF_CHALLENGES, challengeKeys);
+
+        editor.commit();
+    }
+
 }

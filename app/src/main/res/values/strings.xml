@@ -4,4 +4,8 @@
     <string name="challenges_for_today">Challenges for today</string>
     <string name="notif_title">Challenges for today</string>
     <string name="notif_content">You have %d active challenges!</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="delete_challenge">Delete challenge</string>
+    <string name="confirm_delete">Are you sure you want to delete this challenge?</string>
 </resources>

@@ -15,16 +15,17 @@ import java.util.ArrayList;
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
 
-    public interface ChallengeButtonListener {
+    public interface ChallengeListener {
         void onChallengeClicked(Challenge challenge);
+        void onChallengeLongClick(Challenge challenge);
     }
 
     ArrayList<Challenge> mData = new ArrayList<>();
-    ChallengeButtonListener mButtonListener;
+    ChallengeListener mListener;
 
-    public RVAdapter(ArrayList<Challenge> data, ChallengeButtonListener listener) {
+    public RVAdapter(ArrayList<Challenge> data, ChallengeListener listener) {
         mData = data;
-        mButtonListener = listener;
+        mListener = listener;
     }
 
     @Override
@@ -58,12 +59,26 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                     if (v.getId() == R.id.button) {
                         v.setEnabled(false);
                         ((Button)v).setText("Challenge completed for today!");
-                        if (mButtonListener != null) mButtonListener.onChallengeClicked(challenge);
+                        if (mListener != null) mListener.onChallengeClicked(challenge);
                     }
 
                 }
             });
         }
+
+        holder.itemView.setLongClickable(true);
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                mListener.onChallengeLongClick(challenge);
+                return true;
+            }
+        });
+    }
+
+    public void removeChallenge(Challenge challenge) {
+        mData.remove(challenge);
+        notifyDataSetChanged();
     }
 
     public void addChallenge(Challenge challenge) {

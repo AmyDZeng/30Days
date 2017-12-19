@@ -37,7 +37,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Challenge challenge = mData.get(position);
-        holder.mDayCountTV.setText(challenge.mDayCount + " Days");
+        holder.mDayCountTV.setText("Day " + challenge.mDayCount);
         holder.mChallengeName.setText(challenge.mName);
         holder.mChallengeDesc.setText(challenge.mDesc);
 
@@ -50,7 +50,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         } else if (completedForToday) {
             holder.mButton.setText("Challenge completed for today!");
         } else {
-            holder.mButton.setText("Tap here to complete todays challenge!");
+            holder.mButton.setText("Tap here to complete challenge!");
             holder.mButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

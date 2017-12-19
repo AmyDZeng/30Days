@@ -53,6 +53,7 @@
         android:layout_alignParentBottom="true"
         android:text="Create new challenge!"
         android:textAllCaps="true"
+        android:background="@color/transparent"
         />
 
 </RelativeLayout>

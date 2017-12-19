@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:theme="@style/DarkTheme"
     tools:context="com.days.a30.a30days.MainActivity">
 
     <android.support.v7.widget.RecyclerView

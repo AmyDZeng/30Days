@@ -4,19 +4,20 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Malzberry on 12/16/2017.
  */
 
 public class Challenge implements Serializable {
-    int mDayCount;
+    Long mStartTimestamp;
     String mName;
     String mDesc;
     Long mLastCheckTimestamp;
 
-    public Challenge(int days, String name, String desc) {
-        mDayCount = days;
+    public Challenge(String name, String desc) {
+        mStartTimestamp = System.currentTimeMillis();
         mName = name;
         mDesc = desc;
         // set timestamp to exactly at midnight
@@ -50,5 +51,20 @@ public class Challenge implements Serializable {
         calendar.set(Calendar.MILLISECOND, 0);
 
         return calendar;
+    }
+
+    public int getDayCount() {
+        // convert start timestamp to its midnight
+        Calendar startDayCalendar = new GregorianCalendar();
+        startDayCalendar.setTime(new Date(mStartTimestamp));
+        startDayCalendar.set(Calendar.HOUR_OF_DAY, 0);
+        startDayCalendar.set(Calendar.MINUTE, 0);
+        startDayCalendar.set(Calendar.SECOND, 0);
+        startDayCalendar.set(Calendar.MILLISECOND, 0);
+        // compare with most recent midnight
+        long mostRecentMidnightMillis = getLastMidnightCalendar().getTimeInMillis();
+
+        long timeDiffMillis = mostRecentMidnightMillis - startDayCalendar.getTimeInMillis();
+        return (int) (timeDiffMillis / TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS));
     }
 }

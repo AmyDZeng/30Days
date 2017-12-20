@@ -39,7 +39,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Challenge challenge = mData.get(position);
-        holder.mDayCountTV.setText("Day " + challenge.mDayCount);
+        holder.mDayCountTV.setText("Day " + challenge.getDayCount());
         holder.mChallengeName.setText(challenge.mName);
         holder.mChallengeDesc.setText(challenge.mDesc);
 

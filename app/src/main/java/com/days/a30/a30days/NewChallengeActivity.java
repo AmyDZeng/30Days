@@ -40,7 +40,7 @@ public class NewChallengeActivity extends Activity {
                     Toast.makeText(v.getContext(), "A challenge with that name already exists", Toast.LENGTH_SHORT).show();
                 } else {
                     // make the challenge, save the data to SP
-                    Challenge challenge = new Challenge(1, mNameField.getText().toString(), mDescField.getText().toString());
+                    Challenge challenge = new Challenge(mNameField.getText().toString(), mDescField.getText().toString());
                     SharedPrefs.saveNewChallenge(getApplicationContext(), challenge);
                     // set activity flags
                     Intent extras = new Intent();

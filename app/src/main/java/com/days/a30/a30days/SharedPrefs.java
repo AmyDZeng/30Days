@@ -11,6 +11,7 @@ import java.util.HashSet;
 
 /**
  * Created by Malzberry on 12/17/2017.
+ * static shared preference functions for persistence
  */
 
 public final class SharedPrefs {

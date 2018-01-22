@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Malzberry on 12/16/2017.
+ * Adapter for our main recyclerview
  */
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {

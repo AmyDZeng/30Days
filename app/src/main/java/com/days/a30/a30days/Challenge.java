@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Malzberry on 12/16/2017.
+ * Object to hold our challenge data
  */
 
 public class Challenge implements Serializable {

@@ -12,6 +12,8 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 
 /**
  * Created by Malzberry on 12/17/2017.
+ * Our activity for creating a new challenge.
+ * We send the data back to main activity using an activity result intent and capture on onActivityResult()
  */
 
 public class NewChallengeActivity extends Activity {

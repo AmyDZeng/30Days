@@ -1,12 +1,15 @@
 package com.days.a30.a30days;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -58,17 +61,27 @@ public class MainActivity extends AppCompatActivity {
     private void scheduleNotifIfNecessary() {
         if (mAdapter.getItemCount() == 0) return;
 
-        Notification notif = new Notification.Builder(this)
+        Intent notifIntent = new Intent(this, NotificationPublisher.class);
+        notifIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 123);
+        notifIntent.putExtra(NotificationPublisher.NOTIFICATION, getNotification());
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notifIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        // set to 5 seconds in the future
+        long futureMillis = SystemClock.elapsedRealtime() + 5000;
+        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureMillis, pendingIntent);
+    }
+
+    private Notification getNotification() {
+        Notification.Builder builder = new Notification.Builder(this)
                 .setContentTitle(getString(R.string.notif_title))
                 .setContentText(String.format(getString(R.string.notif_content), mAdapter.getItemCount()))
                 .setVibrate(new long[]{200, 200, 200})
                 .setLights(255, 300, 2000)
-                // TODO: replace with new icon
-                .setSmallIcon(R.drawable.met_ic_clear)
-                .build();
-
-        NotificationManager notifManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-        notifManager.notify(123, notif);
+                        // TODO: replace with new icon
+                .setSmallIcon(R.drawable.met_ic_clear);
+        return builder.build();
     }
 
     @Override

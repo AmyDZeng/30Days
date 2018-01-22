@@ -20,6 +20,7 @@ import android.view.View;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -67,10 +68,29 @@ public class MainActivity extends AppCompatActivity {
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notifIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        // set to 5 seconds in the future
-        long futureMillis = SystemClock.elapsedRealtime() + 5000;
+        /*
+          set to 12pm every day TODO: can make this user set
+
+          How are we going to do this?
+          Our purpose is to remind the user on a daily basis,
+          if they've already looked at it today theres no need to remind them.
+          Do we want this to be the case? Where we'll need to track when the app is opened
+
+          if they open the app we want to schedule for the next day, what about scheduling for today?
+          do we need to schedule for today? if we've opened the app yesterday we would've already scheduled for today
+          if we haven't opened the app yesterday we've already broken the chain, all our challenges are failed.
+          No point in notifying -- or we make that a separate notif when you fail challenges. We can handle fail in NotificationPublisher
+
+          In conclusion just schedule for tomorrow since the app has to be opened to start a challenge, and opened once a day to be successful.
+         */
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, 12);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        long futureMillis = calendar.getTimeInMillis();
         AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureMillis, pendingIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, futureMillis, pendingIntent);
     }
 
     private Notification getNotification() {

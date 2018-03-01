@@ -99,8 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 .setContentText(String.format(getString(R.string.notif_content), mAdapter.getItemCount()))
                 .setVibrate(new long[]{200, 200, 200})
                 .setLights(255, 300, 2000)
-                        // TODO: replace with new icon
-                .setSmallIcon(R.drawable.met_ic_clear);
+                .setSmallIcon(R.drawable.ic_launcher);
         return builder.build();
     }
 
